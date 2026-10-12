@@ -103,8 +103,7 @@
 <div class="hero">
   <div class="wrap">
     <div class="eyebrow">અતીતની ઝાંખી કરીએ · Reliving APC Memories</div>
-    <h1>Jay Swaminarayan!</h1>
-    <p>In the presence of Pujya Yagnapriya Swami</p>
+    <h1>In the presence of Pujya Yagnapriya Swami</h1>
     <span class="date">Saturday, October 17, 2026</span>
   </div>
 </div>
@@ -232,7 +231,7 @@ const ITEMS = [
   {s:"12:55", e:"13:00", tag:"Photo",    ti:"Announcements & group photo", pl:"BAPS Mandir"},
   {seg:"Afternoon at Jordan Lake"},
   {s:"13:00", e:"13:30", tag:"Travel",   ti:"Drive to the park — please carpool", pl:"Mandir → Jordan Lake", link:PARK},
-  {s:"13:30", e:"16:00", tag:"Lunch & sports", ti:"Lunch + sports and games", pl:"Jordan Lake, Shelter 8", link:PARK},
+  {s:"13:30", e:"16:00", tag:"Lunch & sports", ti:"Lunch — live Neapolitan pizza — plus sports and games", pl:"Jordan Lake, Shelter 8", link:PARK},
   {s:"16:00", e:"16:15", tag:"Travel",   ti:"Head back to the mandir", pl:"Jordan Lake → Mandir"},
   {seg:"Evening at the mandir"},
   {s:"16:15", e:"17:15", tag:"Gathering", ti:"APC alumni ice-cream party with Pujya Yagnapriya Swami", pl:"Location to be announced", tbc:true},
@@ -282,13 +281,13 @@ function render(){
     K.textContent="Coming up"; V.textContent = d===1 ? "Tomorrow — check-in from 9:00 AM" : `In ${d} days — Saturday, Oct 17`;
     S.textContent="Check-in opens at 9:00 AM at the mandir.";
   } else if (after){
-    K.textContent="Thank you"; V.textContent="Thank you for coming!"; S.textContent="Jay Swaminarayan 🙏";
+    K.textContent="Thank you"; V.textContent="Thank you for coming!"; S.textContent="";
   } else if (curIdx>=0){
     const c=evs[curIdx]; K.textContent="Happening now"; V.textContent=c.ti; S.textContent=`${c.pl}` + (nextIdx>=0?` · Next at ${fmt(evs[nextIdx].s).t} ${fmt(evs[nextIdx].s).ap}: ${evs[nextIdx].ti}`:"");
   } else if (nextIdx>=0){
     const n=evs[nextIdx]; K.textContent="Up next"; V.textContent=`${fmt(n.s).t} ${fmt(n.s).ap} — ${n.ti}`; S.textContent=n.pl;
   } else {
-    K.textContent="Today"; V.textContent="That’s a wrap — thank you for coming!"; S.textContent="Jay Swaminarayan 🙏";
+    K.textContent="Today"; V.textContent="That’s a wrap — thank you for coming!"; S.textContent="";
   }
 }
 
