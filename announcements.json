@@ -1,6 +1,12 @@
 {
   "announcements": [
     {
+      "id": "2026-10-12-moments",
+      "when": "Mon, Oct 12",
+      "title": "Share your APC moments 📸",
+      "body": "Tap the camera button at the bottom of this page to share your photos from Saturday. The event code will be announced at check-in. Photos appear in the album after a quick review."
+    },
+    {
       "id": "2026-10-12-welcome",
       "when": "Mon, Oct 12",
       "title": "Welcome to the APC Alumni Convention 2026 🙏",
