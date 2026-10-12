@@ -53,6 +53,8 @@
   .tl .dot{width:12px;height:12px;border:2px solid var(--maroon);background:var(--paper);border-radius:3px;margin:5px 0 0 4px;position:relative;z-index:1}
   .tl .tag{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
   .tl .ti{font-weight:700;font-size:15.5px}
+  .tl .ic{font-size:19px;margin-right:6px;vertical-align:-2px}
+  h3 .ic{font-size:16px;margin-right:4px}
   .tl .pl{color:var(--muted);font-size:13px}
   .tl .note{font-size:13px;color:var(--muted);margin-top:2px}
   .tl .pl a{font-weight:600}
@@ -132,7 +134,7 @@
   <section class="view" id="v-maps">
     <h2>Getting there</h2>
     <div class="card">
-      <h3 style="margin-top:0">Morning & evening</h3>
+      <h3 style="margin-top:0"><span class="ic">🛕</span>Morning & evening</h3>
       <b>BAPS Shri Swaminarayan Mandir</b><br>
       1020 Aviation Pkwy, Morrisville, NC 27560
       <div class="row2">
@@ -141,7 +143,7 @@
       </div>
     </div>
     <div class="card">
-      <h3 style="margin-top:0">Afternoon · 1:30–4:00 PM</h3>
+      <h3 style="margin-top:0"><span class="ic">🌳</span>Afternoon · 1:30–4:00 PM</h3>
       <b>Jordan Lake State Recreation Area</b><br>
       Ebenezer Church Access — Picnic Shelter 8<br>
       2582 Beaver Creek Rd, Apex, NC 27502
@@ -157,17 +159,17 @@
   <section class="view" id="v-stay">
     <h2>Stay &amp; travel</h2>
     <div class="card">
-      <h3 style="margin-top:0">Need a place to stay?</h3>
+      <h3 style="margin-top:0"><span class="ic">🏨</span>Need a place to stay?</h3>
       <p style="margin:0">If you asked for accommodation on the form, the team will contact you with details.</p>
       <p style="margin:8px 0 0">Booking your own? Use the group rate (code <b>APCALUM</b>) for Oct 16–18:</p>
       <a class="btn" href="https://www.wyndhamhotels.com/hotels/53028?checkInDate=10/16/2026&checkOutDate=10/18/2026&groupCode=APCALUM" target="_blank" rel="noopener">Book with the APC group rate</a>
     </div>
     <div class="card">
-      <h3 style="margin-top:0">Flying in?</h3>
+      <h3 style="margin-top:0"><span class="ic">✈️</span>Flying in?</h3>
       <p style="margin:0">If you shared your flight details on the form, the transport team will reach out about airport pickup and rides.</p>
     </div>
     <div class="card">
-      <h3 style="margin-top:0">To the park and back</h3>
+      <h3 style="margin-top:0"><span class="ic">🚗</span>To the park and back</h3>
       <ul class="plain">
         <li>Leave the mandir around <b>1:00 PM</b> after the group photo.</li>
         <li>Carpool — parking at the shelter is limited.</li>
@@ -181,7 +183,7 @@
   <section class="view" id="v-help">
     <h2>Good to know</h2>
     <div class="card">
-      <h3 style="margin-top:0">Please bring</h3>
+      <h3 style="margin-top:0"><span class="ic">🎒</span>Please bring</h3>
       <ul class="plain">
         <li>Comfortable clothes and shoes for sports</li>
         <li>A water bottle and sun protection for the park</li>
@@ -189,12 +191,12 @@
       </ul>
     </div>
     <div class="card">
-      <h3 style="margin-top:0">Questions?</h3>
+      <h3 style="margin-top:0"><span class="ic">💬</span>Questions?</h3>
       <p style="margin:0">Ask at the check-in desk, or message the team in the APC Telegram channel.</p>
       <a class="btn" href="https://t.me/+MF6ikEe1pLthMjZh" target="_blank" rel="noopener">Open the APC Telegram channel</a>
     </div>
     <div class="card">
-      <h3 style="margin-top:0">Add this page to your phone</h3>
+      <h3 style="margin-top:0"><span class="ic">📱</span>Add this page to your phone</h3>
       <p style="margin:0">iPhone: tap Share → <b>Add to Home Screen</b>. Android: tap ⋮ → <b>Add to Home screen</b>.</p>
     </div>
   </section>
@@ -224,20 +226,20 @@
 const DAY = "2026-10-17";
 const PARK = "https://www.google.com/maps/search/?api=1&query=2582+Beaver+Creek+Rd%2C+Apex%2C+NC+27502";
 const ITEMS = [
-  {seg:"Morning at the mandir"},
-  {s:"09:00", e:"10:00", tag:"Arrival",  ti:"Check-in, darshan & breakfast", pl:"BAPS Mandir", note:"APC gazals playing as everyone gathers — come early and reconnect"},
-  {s:"10:00", e:"11:55", tag:"Sabha",    ti:"APC Sneh Milan Sabha", pl:"BAPS Mandir", note:"Kirtan, APC smruti videos, alumni prasangs and Pujya Yagnapriya Swami’s katha"},
-  {s:"11:55", e:"12:55", tag:"Darshan",  ti:"Freelance session — meet Pujya Yagnapriya Swami", pl:"BAPS Mandir"},
-  {s:"12:55", e:"13:00", tag:"Photo",    ti:"Announcements & group photo", pl:"BAPS Mandir"},
-  {seg:"Afternoon at Jordan Lake"},
-  {s:"13:00", e:"13:30", tag:"Travel",   ti:"Drive to the park — please carpool", pl:"Mandir → Jordan Lake", link:PARK},
-  {s:"13:30", e:"16:00", tag:"Lunch & sports", ti:"Lunch — live Neapolitan pizza — plus sports and games", pl:"Jordan Lake, Shelter 8", link:PARK},
-  {s:"16:00", e:"16:15", tag:"Travel",   ti:"Head back to the mandir", pl:"Jordan Lake → Mandir"},
-  {seg:"Evening at the mandir"},
-  {s:"16:15", e:"17:15", tag:"Gathering", ti:"APC alumni ice-cream party with Pujya Yagnapriya Swami", pl:"Location to be announced", tbc:true},
-  {s:"17:15", e:"19:00", tag:"Sabha",    ti:"Satsang Sabha — Pujya Yagnapriya Swami’s katha and arti", pl:"BAPS Mandir", note:"The sabha begins at 5:00 PM with a health-awareness talk"},
-  {s:"19:00", e:"20:15", tag:"Meal",     ti:"Dinner", pl:"Gym"},
-  {s:"20:15", e:"20:45", tag:"Darshan",  ti:"Vidai", pl:"Mandir"},
+  {seg:"🌅 Morning at the mandir"},
+  {s:"09:00", e:"10:00", ic:"☕", tag:"Arrival",  ti:"Check-in, darshan & breakfast", pl:"BAPS Mandir", note:"APC gazals playing as everyone gathers — come early and reconnect"},
+  {s:"10:00", e:"11:55", ic:"🪔", tag:"Sabha",    ti:"APC Sneh Milan Sabha", pl:"BAPS Mandir", note:"Kirtan, APC smruti videos, alumni prasangs and Pujya Yagnapriya Swami’s katha"},
+  {s:"11:55", e:"12:55", ic:"🙏", tag:"Darshan",  ti:"Freelance session — meet Pujya Yagnapriya Swami", pl:"BAPS Mandir"},
+  {s:"12:55", e:"13:00", ic:"📸", tag:"Photo",    ti:"Announcements & group photo", pl:"BAPS Mandir"},
+  {seg:"🌳 Afternoon at Jordan Lake"},
+  {s:"13:00", e:"13:30", ic:"🚗", tag:"Travel",   ti:"Drive to the park — please carpool", pl:"Mandir → Jordan Lake", link:PARK},
+  {s:"13:30", e:"16:00", ic:"🍕", tag:"Lunch & sports", ti:"Lunch — live Neapolitan pizza — plus sports and games", pl:"Jordan Lake, Shelter 8", link:PARK},
+  {s:"16:00", e:"16:15", ic:"🚗", tag:"Travel",   ti:"Head back to the mandir", pl:"Jordan Lake → Mandir"},
+  {seg:"🌇 Evening at the mandir"},
+  {s:"16:15", e:"17:15", ic:"🍦", tag:"Gathering", ti:"APC alumni ice-cream party with Pujya Yagnapriya Swami", pl:"Location to be announced", tbc:true},
+  {s:"17:15", e:"19:00", ic:"🪔", tag:"Sabha",    ti:"Satsang Sabha — Pujya Yagnapriya Swami’s katha and arti", pl:"BAPS Mandir", note:"The sabha begins at 5:00 PM with a health-awareness talk"},
+  {s:"19:00", e:"20:15", ic:"🍽️", tag:"Meal",     ti:"Dinner", pl:"Gym"},
+  {s:"20:15", e:"20:45", ic:"🙏", tag:"Darshan",  ti:"Vidai", pl:"Mandir"},
 ];
 
 // "now" in US Eastern time, as minutes and date string
@@ -270,7 +272,7 @@ function render(){
     if (x.tbc) pill += '<span class="pill tbc">TBC</span>';
     const place = x.link ? `<a href="${x.link}" target="_blank" rel="noopener">${x.pl} ↗</a>` : x.pl;
     html += `<li class="${cls}"><div class="t"><b>${a.t}</b><small>${a.ap}<br>to ${b.t} ${b.ap}</small></div><div class="dot"></div>
-      <div class="body"><div class="tag">${x.tag}</div><div class="ti">${x.ti}${pill}</div><div class="pl">${place}</div>${x.note?`<div class="note">${x.note}</div>`:""}</div></li>`;
+      <div class="body"><div class="tag">${x.tag}</div><div class="ti">${x.ic?`<span class="ic">${x.ic}</span>`:""}${x.ti}${pill}</div><div class="pl">${place}</div>${x.note?`<div class="note">${x.note}</div>`:""}</div></li>`;
   }
   html += "</ul>";
   document.getElementById("timeline").innerHTML = html.replace('<ul class="tl"></ul>','');
