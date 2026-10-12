@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Moments — approval</title>
+<style>
+  :root{--maroon:#6E1A2A;--saffron:#D9731F;--paper:#F6F0E8;--line:#E4D8CC;--muted:#6B6B6B;--green:#2E7D4F;--red:#B3261E}
+  *{box-sizing:border-box} body{margin:0;background:var(--paper);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;color:#2B2B2B}
+  header{background:var(--maroon);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:5}
+  header b{font-size:17px} header span{display:block;font-size:12px;color:#F4B27A}
+  main{max-width:760px;margin:0 auto;padding:12px 16px 40px}
+  .tabs{display:flex;gap:8px;margin:8px 0 14px} .tabs button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--maroon);background:#fff;color:var(--maroon);font-weight:600;cursor:pointer}
+  .tabs button.on{background:var(--maroon);color:#fff}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:12px}
+  .card img{width:100%;max-height:420px;object-fit:contain;background:#222;display:block}
+  .card .meta{padding:10px 12px;font-size:14px} .card .meta small{color:var(--muted);display:block}
+  .row{display:flex;gap:8px;padding:0 12px 12px}
+  .row button{flex:1;padding:11px;border:0;border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
+  .ok{background:var(--green)} .no{background:var(--red)}
+  .login{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:20px}
+  .login input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;margin:8px 0}
+  .login button{width:100%;padding:11px;border:0;border-radius:10px;background:var(--maroon);color:#fff;font-weight:700}
+  .empty{color:var(--muted);text-align:center;padding:30px}
+  #status{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header><span>APC Alumni Convention 2026 – Southeast</span><b>Moments — photo approval</b></header>
+<main>
+  <div id="loginBox" class="login" hidden>
+    <b>Admin key</b>
+    <input id="key" type="password" placeholder="Paste the admin key" autocomplete="off">
+    <button id="go">Open</button>
+  </div>
+  <div id="app" hidden>
+    <div class="tabs"><button id="tP" class="on">Waiting for approval</button><button id="tA">Published</button></div>
+    <div id="status"></div>
+    <div id="list"></div>
+  </div>
+</main>
+<script>
+let KEY = ""; try { KEY = sessionStorage.getItem("apc26_admin") || ""; } catch(e){}
+const h = new URLSearchParams(location.hash.slice(1)); if (h.get("key")) { KEY = h.get("key"); history.replaceState(null, "", location.pathname); }
+let view = "pending";
+const $ = id => document.getElementById(id);
+function esc(s){ return String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+async function load(){
+  $("status").textContent = "Loading…";
+  const r = await fetch("/api/photos" + (view==="pending" ? "?status=pending" : "") + (view==="pending" ? "&" : "?") + "t=" + Date.now(),
+                        { headers: { authorization: "Bearer " + KEY }, cache: "no-store" });
+  if (r.status === 401){ try{ sessionStorage.removeItem("apc26_admin"); }catch(e){} showLogin("That key didn't work."); return; }
+  try { sessionStorage.setItem("apc26_admin", KEY); } catch(e){}
+  $("loginBox").hidden = true; $("app").hidden = false;
+  const { photos = [] } = await r.json();
+  $("status").textContent = `${photos.length} photo${photos.length===1?"":"s"}`;
+  $("list").innerHTML = photos.length ? photos.map(p => `
+    <div class="card" id="c-${p.id}">
+      <img loading="lazy" data-src="${p.full}" alt="">
+      <div class="meta">${esc(p.caption) || "<i>No caption</i>"}<small>${esc(p.name) || "Anonymous"} · ${new Date(p.uploaded).toLocaleString()}</small></div>
+      <div class="row">${view==="pending"
+        ? `<button class="ok" data-a="approve" data-id="${p.id}">Approve</button><button class="no" data-a="reject" data-id="${p.id}">Delete</button>`
+        : `<button class="no" data-a="unpublish" data-id="${p.id}">Take down</button>`}</div>
+    </div>`).join("") : `<div class="empty">${view==="pending" ? "Nothing waiting — all caught up." : "No published photos yet."}</div>`;
+  document.querySelectorAll("[data-a]").forEach(b => b.onclick = () => act(b.dataset.id, b.dataset.a, b));
+  // pending images need the admin key, so load them with a header instead of a plain <img src>
+  for (const img of document.querySelectorAll("img[data-src]")) {
+    if (view !== "pending") { img.src = img.dataset.src; continue; }
+    fetch(img.dataset.src, { headers: { authorization: "Bearer " + KEY } })
+      .then(r => r.ok ? r.blob() : null).then(b => { if (b) img.src = URL.createObjectURL(b); });
+  }
+}
+async function act(id, action, btn){
+  if (action !== "approve" && !confirm(action === "reject" ? "Delete this photo?" : "Take this photo down from the album?")) return;
+  btn.disabled = true;
+  const r = await fetch("/api/moderate", { method: "POST", headers: { "content-type": "application/json", authorization: "Bearer " + KEY }, body: JSON.stringify({ id, action }) });
+  if (r.ok) { $("c-" + id).remove(); } else { btn.disabled = false; alert("That didn't work — please try again."); }
+}
+function showLogin(msg){ $("app").hidden = true; $("loginBox").hidden = false; if (msg) $("status").textContent = msg; }
+$("go").onclick = () => { KEY = $("key").value.trim(); if (KEY) load(); };
+$("tP").onclick = () => { view = "pending"; $("tP").classList.add("on"); $("tA").classList.remove("on"); load(); };
+$("tA").onclick = () => { view = "approved"; $("tA").classList.add("on"); $("tP").classList.remove("on"); load(); };
+if (KEY) load(); else showLogin();
+setInterval(() => { if (KEY && !$("app").hidden) load(); }, 60000);
+</script>
+</body>
+</html>
